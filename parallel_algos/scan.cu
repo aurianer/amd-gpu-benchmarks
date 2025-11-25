@@ -80,10 +80,11 @@ int main(int argc, char** argv)
     memory_tracker.print_stats();
     std::size_t numBytesMoved = 2lu * numValues * sizeof(ValueType);
     std::printf("exclusive scan normal time for %zu values: %f s, bandwidth: %f MiB/s\n", numValues,
-        timeScan / 1000, float(numBytesMoved) / timeScan / 1000);
+        timeScan / 1000, float(numBytesMoved) / (timeScan / 1000) / (1024 * 1024));
     std::printf(
         "exclusive scan with memory tracking time for %zu values: %f s, bandwidth: %f MiB/s\n",
-        numValues, timeScanTracked / 1000, float(numBytesMoved) / timeScanTracked / 1000);
+        numValues, timeScanTracked / 1000,
+        float(numBytesMoved) / (timeScanTracked / 1000) / (1024 * 1024));
 
     if (power <= 25)
     {
