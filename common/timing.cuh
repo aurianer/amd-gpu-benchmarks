@@ -40,10 +40,12 @@ float timeGpu(F&& f)
     checkGpuErrors(cudaEventCreate(&start));
     checkGpuErrors(cudaEventCreate(&stop));
 
+    checkGpuErrors(cudaDeviceSynchronize());    // ensure device is idle
     checkGpuErrors(cudaEventRecord(start, cudaStreamDefault));
 
     f();
 
+    checkGpuErrors(cudaDeviceSynchronize());
     checkGpuErrors(cudaEventRecord(stop, cudaStreamDefault));
     checkGpuErrors(cudaEventSynchronize(stop));
 
